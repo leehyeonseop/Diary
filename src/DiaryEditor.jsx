@@ -1,8 +1,20 @@
-import { useRef ,useState } from 'react';
+import React, {useContext, useEffect, useRef ,useState } from 'react';
+import { DiaryDispatchContext } from './App';
 
 const DiaryEditor = (props) => {
 
-    const {onCreate} = props
+    // DiaryEditor의 맨 마지막에 React.memo를 사용해주어 같은 props일때는 렌더링이 다시 되지 않도록 해주었다. => 하지만 props로 전달받은 것은 함수 즉 객체이다.
+    // App.jsx에서 빈 state로 처음 렌더링이되고 setData(initData) 로인해 한번더 렌더링이 되는데 그러면 2번 onCreate함수가 만들어지는 꼴이다.
+    // onCreate함수는 app component가 재생성될때마다 게속 생성되기때문에 값이 다름
+    // => 결론적으로 onCreate함수가 재생성되지 않아야 최적화를 할 수 있다.
+
+    const {onCreate} = useContext(DiaryDispatchContext)
+
+    useEffect(() => {
+        console.log('DiaryEditor 렌더')
+    })
+
+    
 
     const authorInput = useRef()
     const contentInput = useRef()
@@ -119,4 +131,4 @@ const DiaryEditor = (props) => {
     )
 };
 
-export default DiaryEditor
+export default React.memo(DiaryEditor)

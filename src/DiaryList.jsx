@@ -1,11 +1,14 @@
 
+import { useContext } from 'react'
+import { DiaryStateContext } from './App'
 import DiaryItem from './DiaryItem'
 
 
 const DiaryList = (props) => {
 
-    const {diaryList, onRemove, onEdit} = props
-    console.log(diaryList)
+    
+    
+    const diaryList = useContext(DiaryStateContext)
 
     // 현재 diaryList를 props로 받아서 배열을 순회하여 리스트를 뽑아줬지만, 만약 넘어오는 list의 값이 undefined라면 문제의 소지가 있다. 따라서 defaultPros를 활용해서 이러한 경우를 대비하자.
 
@@ -23,8 +26,6 @@ const DiaryList = (props) => {
                         <DiaryItem 
                             key={item.id}
                             {...item}
-                            onRemove={onRemove}
-                            onEdit={onEdit} 
                         />
                     )
                 })}
